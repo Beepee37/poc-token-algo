@@ -1,0 +1,106 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>beepee37.dev</groupId>
+		<artifactId>poc-token-all-modules</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	
+	<!-- parent module artifact for the project -->
+	<!-- Used to define global properties, dependency management and project profiles -->
+	
+	
+	<artifactId>poc-token-parent</artifactId>
+
+	<!-- remember version policy for SNAPSHOT : you must avoid versions conflicts between branches, so please for branches other than default, use versions like x.y.z-branchName-SNAPSHOT -->
+	
+	<name>${project.artifactId}</name>
+	<description>Parent Pom for all poc-token modules</description>
+	<packaging>pom</packaging>
+
+	<!-- global properties for all modules of this project -->
+	<properties>
+		<!-- specifiy your java version according to your project and default-parent expected configuration -->
+		<maven.compiler.release>11</maven.compiler.release>
+
+		<!-- Your project global properties here -->
+		
+		<!-- dependencies versions variables -->
+		<jackson.version>2.16.1</jackson.version>
+		<jakarta.servlet-api.version>4.0.4</jakarta.servlet-api.version>
+		<json-path.version>2.9.0</json-path.version>
+		<mockito-core-version>5.10.0</mockito-core-version>
+		<mockito-junit-jupiter-version>5.10.0</mockito-junit-jupiter-version>
+		<spring.version>5.3.31</spring.version>
+	</properties>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>beepee37.dev</groupId>
+				<artifactId>poc-token-bom</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			 <dependency>
+	            <groupId>org.springframework</groupId>
+	            <artifactId>spring-framework-bom</artifactId>
+	            <version>${spring.version}</version>
+	            <type>pom</type>
+	            <scope>import</scope>
+	        </dependency>
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+            <dependency>
+    			<groupId>jakarta.servlet</groupId>
+    			<artifactId>jakarta.servlet-api</artifactId>
+			</dependency>
+
+			<!-- test dependencies here -->
+			<dependency>
+				<groupId>com.jayway.jsonpath</groupId>
+				<artifactId>json-path</artifactId>
+				<scope>test</scope>
+				<version>${json-path.version}</version>
+			</dependency>
+			
+		    <dependency>
+			  	<groupId>org.mockito</groupId>
+		      	<artifactId>mockito-junit-jupiter</artifactId>
+		      	<version>${mockito-junit-jupiter-version}</version>
+		      	<scope>test</scope>
+		    </dependency>
+			
+			<dependency>
+				<groupId>org.hamcrest</groupId>
+				<artifactId>hamcrest</artifactId>
+				<version>2.2</version>
+				<scope>test</scope>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+
+	<!-- Build Configuration -->
+	<build>
+
+		<!-- Config plugin and build here if necessary. Try to rely, as far as possible, on maven-default-parent configuration, so that you may not need any extra 
+			configuration here -->
+
+	</build>
+
+	<profiles>
+		<!-- your global project profiles here -->
+	</profiles>
+
+</project>

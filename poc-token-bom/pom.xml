@@ -1,0 +1,37 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>beepee37.dev</groupId>
+		<artifactId>poc-token-all-modules</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+	<artifactId>poc-token-bom</artifactId>
+
+	<name>${project.artifactId}</name>
+	<description>Pom to reference all modules versions.</description>
+
+	<packaging>pom</packaging>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Declare here all and only this project's modules and nothing more -->
+			<!-- version must be declared explicitly. Do no use maven variables here -->
+			<dependency>
+				<groupId>beepee37.dev</groupId>
+				<artifactId>poc-token-conf</artifactId>
+				<type>zip</type>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>beepee37.dev</groupId>
+				<artifactId>poc-token-algo</artifactId>
+				<type>jar</type>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

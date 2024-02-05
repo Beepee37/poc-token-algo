@@ -1,0 +1,117 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>beepee37.common</groupId>
+		<artifactId>default-maven-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath />
+	</parent>
+
+	<!-- artifact all-modules -->
+	<!-- this is a technical artifact for the project -->
+	<!-- it uses profiles to declare module -->
+	<!-- its purpose is to allow you make release in just one shot  -->
+	<!-- it is also used as an artifact to list modules versions that compose the release, so that one can know which versions of your modules are to be used together (and that are guaranteed to work together) -->
+	
+	<groupId>beepee37.dev</groupId>
+	<artifactId>poc-token-all-modules</artifactId>
+	
+	<!-- remember version policy for SNAPSHOT : you must avoid versions conflicts between branches, so please for branches other than default, use versions like x.y.z-branchName-SNAPSHOT -->
+	<version>1.0.0-SNAPSHOT</version>
+
+	<name>${project.artifactId}</name>
+	<description>Pom to build all project poc-token modules and to define the poc-token-all-modules pom for dependency management</description>
+	
+	<packaging>pom</packaging>
+	<organization>
+		<name>beepee37 - perso dev </name>
+	</organization>
+
+	<properties>
+
+	</properties>
+
+	<!-- scm for release. Do not use maven variable here because maven release plugin modify this part -->
+    <scm>
+        <!-- for release -->
+        <connection>scm:git:https://github.com/Beepee37/poc-token-generator</connection>
+        <developerConnection>scm:git:[push=]https://github.com/Beepee37/poc-token-generator[fetch=]https://github.com/Beepee37/poc-token-generator</developerConnection>
+        <url>https://github.com/Beepee37/poc-token-generator</url>
+        <tag>HEAD</tag>
+    </scm>
+
+	<!-- TO UPLOAD MAVEN ARTIFACTS -->
+    <distributionManagement>
+      <repository>
+            <id>${repo-name}-releases</id>
+            <name>project Releases Repository</name>
+            <url>${releases-repo-url}</url>
+        </repository>
+        <snapshotRepository>
+            <id>${repo-name}-snapshots</id>
+            <name>project snapshots Repository</name>
+            <url>${snapshots-repo-url}</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+	<profiles>
+		<profile>
+			<!-- profile to build all the project : pom-all, pom-parent and all modules -->
+			<!-- this profile is activated if environment variable ActivateChoosenModule is not defined or is defined and value is not true -->
+			<id>BUILD-ALL-MODULES</id>
+			<activation>
+                <property>
+                   <name>env.ActivateChoosenModule</name>
+				   <value>!true</value>
+                </property>
+            </activation>
+			<modules>
+				<module>./poc-token-bom</module>
+				<module>./poc-token-parent-pom</module>
+				<module>./poc-token-conf</module>
+				<module>./poc-token-algo</module>
+			</modules>
+		</profile>
+		<profile>
+			<!-- profile to only build pom-all and pom-parent -->
+			<id>BUILD-POM-ALL-AND-PARENT</id>
+			<modules>
+				<module>./poc-token-bom</module>
+				<module>./poc-token-parent-pom</module>
+			</modules>
+		</profile>
+		<profile>
+			<!-- profile to only build pom-all -->
+			<id>BUILD-SIMPLE</id>
+			<!-- use this profile if you just want to build the "all-modules" pom -->
+		</profile>
+		<profile>
+			<!-- profile to only build pom-all and pom-parent and conf module -->
+			<id>BUILD-PARENT-AND-CONF</id>
+			<modules>
+				<module>./poc-token-bom</module>
+				<module>./poc-token-parent-pom</module>
+				<module>./poc-token-conf</module>
+			</modules>
+		</profile>
+		<profile>
+			<!-- profile to build some chosen modules -->
+			<id>BUILD-CHOSEN-MODULES</id>
+			<activation>
+                <property>
+                    <name>env.ActivateChoosenModule</name>
+					<value>true</value>
+                </property>
+            </activation>
+			<modules>
+				<module>./poc-token-bom</module>
+				<module>./poc-token-parent-pom</module>
+ 				<module>./poc-token-conf</module>
+				<module>./poc-token-algo</module>
+			</modules>
+		</profile>
+		<!-- add any other "technical" profiles if necessary. -->
+	</profiles>
+</project>

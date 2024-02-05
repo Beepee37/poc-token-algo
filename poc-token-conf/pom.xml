@@ -1,0 +1,83 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>beepee37.dev</groupId>
+		<artifactId>poc-token-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../poc-token-parent-pom/pom.xml</relativePath>
+	</parent>
+
+	<artifactId>poc-token-conf</artifactId>
+	<name>${project.artifactId}</name>
+	<packaging>pom</packaging>
+	<properties>
+	</properties>
+
+	<dependencies>
+
+	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>DOCKER-DEV</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<profil>DOCKER-DEV</profil>
+			</properties>
+			<build>
+
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-assembly-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>make-docker-conf-zip</id>
+								<phase>package</phase>
+								<goals>
+									<goal>single</goal>
+								</goals>
+								<configuration>
+									<filters>
+										<filter>maven-conf/filters/docker-filter-values.properties</filter>
+									</filters>
+									<finalName>${project.artifactId}-${project.version}</finalName>
+									<descriptors>
+										<descriptor>${project.basedir}/maven-conf/assembly/builddockerzipconf.xml
+										</descriptor>
+									</descriptors>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+	</profiles>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>maven-conf/assembly/buildrawzipconf.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

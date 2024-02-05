@@ -1,0 +1,16 @@
+# /
+*/.project
+*/.classpath
+*/.settings
+*/.settings/*
+*/target
+
+.idea/**
+*/.idea/**
+*/*.iml
+*/overlays/**
+
+*/bin/**
+/.project
+/.settings/
+/target/
